@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<statement bank="Сбербанк" bic="044525225" generated_at="2024-04-01T09:00:00">
+  <account number="40702810400000012345" currency="RUB" owner="ООО Технологии Будущего" inn="7701234567"/>
+
+  <transactions total_count="5" total_debit="285000.00" total_credit="950000.00">
+
+    <transaction id="TXN-2024-0001" type="credit" status="completed">
+      <date>2024-01-15</date>
+      <amount currency="RUB">500000.00</amount>
+      <purpose>Оплата по договору №123 от 10.01.2024 за поставку оборудования</purpose>
+      <counterparty>
+        <name>ООО Ромашка</name>
+        <inn>7702345678</inn>
+        <account>40702810500000067890</account>
+        <bank bic="044525593">ВТБ</bank>
+      </counterparty>
+      <details>
+        <doc_number>П-00123</doc_number>
+        <doc_date>2024-01-14</doc_date>
+        <payment_type>wire</payment_type>
+        <priority>5</priority>
+      </details>
+    </transaction>
+
+    <transaction id="TXN-2024-0002" type="debit" status="completed">
+      <date>2024-01-16</date>
+      <amount currency="RUB">85000.00</amount>
+      <purpose>Оплата аренды офиса за январь 2024</purpose>
+      <counterparty>
+        <name>ИП Сидоров Петр Иванович</name>
+        <inn>770312345678</inn>
+        <account>40802810700000098765</account>
+        <bank bic="044525974">Альфа-Банк</bank>
+      </counterparty>
+      <details>
+        <doc_number>Р-00456</doc_number>
+        <doc_date>2024-01-15</doc_date>
+        <payment_type>wire</payment_type>
+        <priority>5</priority>
+      </details>
+    </transaction>
+
+    <transaction id="TXN-2024-0003" type="credit" status="completed">
+      <date>2024-01-20</date>
+      <amount currency="RUB">450000.00</amount>
+      <purpose>Аванс по договору №456 от 18.01.2024</purpose>
+      <counterparty>
+        <name>АО Промышленный Холдинг</name>
+        <inn>7703456789</inn>
+        <account>40702810900000011111</account>
+        <bank bic="044525225">Сбербанк</bank>
+      </counterparty>
+      <details>
+        <doc_number>П-00789</doc_number>
+        <doc_date>2024-01-19</doc_date>
+        <payment_type>wire</payment_type>
+        <priority>5</priority>
+      </details>
+    </transaction>
+
+    <transaction id="TXN-2024-0004" type="debit" status="pending">
+      <date>2024-01-22</date>
+      <amount currency="RUB">120000.00</amount>
+      <purpose>Выплата заработной платы за январь 2024</purpose>
+      <counterparty>
+        <name>Физические лица (реестр №1)</name>
+        <inn/>
+        <account>40817810100000022222</account>
+        <bank bic="044525225">Сбербанк</bank>
+      </counterparty>
+      <details>
+        <doc_number>З-00101</doc_number>
+        <doc_date>2024-01-22</doc_date>
+        <payment_type>payroll</payment_type>
+        <priority>3</priority>
+      </details>
+    </transaction>
+
+    <transaction id="TXN-2024-0005" type="debit" status="cancelled">
+      <date>2024-01-25</date>
+      <amount currency="RUB">80000.00</amount>
+      <purpose>Оплата рекламных услуг</purpose>
+      <counterparty>
+        <name>ООО Маркетинг Плюс</name>
+        <inn>7704567890</inn>
+        <account>40702810300000033333</account>
+        <bank bic="044525593">ВТБ</bank>
+      </counterparty>
+      <details>
+        <doc_number>Р-00202</doc_number>
+        <doc_date>2024-01-24</doc_date>
+        <payment_type>wire</payment_type>
+        <priority>5</priority>
+      </details>
+    </transaction>
+
+  </transactions>
+</statement>

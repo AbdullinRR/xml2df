@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<report generated_at="2024-04-01T09:00:00" version="2.0">
+
+  <bank name="Сбербанк" bic="044525225" region="Москва">
+    <license number="1481" issued="1991-08-22" valid_until="2099-12-31"/>
+    <address city="Москва" street="ул. Вавилова" building="19"/>
+  </bank>
+
+  <accounts total="3">
+
+    <account id="ACC-001" type="checking" status="active">
+      <owner inn="7701234567" kpp="770101001">
+        <name>ООО Технологии Будущего</name>
+        <ceo>Иванов Иван Иванович</ceo>
+        <phone>+7 495 123-45-67</phone>
+      </owner>
+      <balance currency="RUB" updated_at="2024-04-01">
+        <opening>1500000.00</opening>
+        <closing>1215000.00</closing>
+        <turnover_debit>285000.00</turnover_debit>
+        <turnover_credit>0.00</turnover_credit>
+      </balance>
+      <transactions total_count="3" total_amount="285000.00">
+        <transaction id="TXN-001" type="debit" status="completed" channel="web">
+          <date>2024-01-15</date>
+          <amount currency="RUB">85000.00</amount>
+          <purpose code="21">Оплата аренды офиса за январь 2024</purpose>
+          <counterparty inn="770312345678" kpp="770301001">
+            <name>ИП Сидоров Петр Иванович</name>
+            <account number="40802810700000098765">
+              <bank bic="044525974" name="Альфа-Банк"/>
+            </account>
+          </counterparty>
+          <details>
+            <doc_number>Р-00456</doc_number>
+            <doc_date>2024-01-14</doc_date>
+            <payment_type>wire</payment_type>
+            <priority>5</priority>
+            <vat rate="20">14166.67</vat>
+          </details>
+        </transaction>
+        <transaction id="TXN-002" type="debit" status="completed" channel="mobile">
+          <date>2024-01-22</date>
+          <amount currency="RUB">120000.00</amount>
+          <purpose code="22">Выплата заработной платы за январь 2024</purpose>
+          <counterparty inn="770401001" kpp="770401001">
+            <name>Физические лица (реестр №1)</name>
+            <account number="40817810100000022222">
+              <bank bic="044525225" name="Сбербанк"/>
+            </account>
+          </counterparty>
+          <details>
+            <doc_number>З-00101</doc_number>
+            <doc_date>2024-01-21</doc_date>
+            <payment_type>payroll</payment_type>
+            <priority>3</priority>
+            <vat rate="0">0.00</vat>
+          </details>
+        </transaction>
+        <transaction id="TXN-003" type="debit" status="pending" channel="api">
+          <date>2024-01-25</date>
+          <amount currency="RUB">80000.00</amount>
+          <purpose code="21">Оплата рекламных услуг</purpose>
+          <counterparty inn="7704567890" kpp="770401002">
+            <name>ООО Маркетинг Плюс</name>
+            <account number="40702810300000033333">
+              <bank bic="044525593" name="ВТБ"/>
+            </account>
+          </counterparty>
+          <details>
+            <doc_number>Р-00202</doc_number>
+            <doc_date>2024-01-24</doc_date>
+            <payment_type>wire</payment_type>
+            <priority>5</priority>
+            <vat rate="20">13333.33</vat>
+          </details>
+        </transaction>
+      </transactions>
+    </account>
+
+    <account id="ACC-002" type="deposit" status="active">
+      <owner inn="7702345678" kpp="770201001">
+        <name>ООО Ромашка</name>
+        <ceo>Петрова Анна Сергеевна</ceo>
+        <phone>+7 495 987-65-43</phone>
+      </owner>
+      <balance currency="RUB" updated_at="2024-04-01">
+        <opening>5000000.00</opening>
+        <closing>5500000.00</closing>
+        <turnover_debit>0.00</turnover_debit>
+        <turnover_credit>500000.00</turnover_credit>
+      </balance>
+      <transactions total_count="1" total_amount="500000.00">
+        <transaction id="TXN-004" type="credit" status="completed" channel="web">
+          <date>2024-01-20</date>
+          <amount currency="RUB">500000.00</amount>
+          <purpose code="11">Пополнение депозита</purpose>
+          <counterparty inn="7703456789" kpp="770301002">
+            <name>АО Промышленный Холдинг</name>
+            <account number="40702810900000011111">
+              <bank bic="044525225" name="Сбербанк"/>
+            </account>
+          </counterparty>
+          <details>
+            <doc_number>П-00789</doc_number>
+            <doc_date>2024-01-19</doc_date>
+            <payment_type>wire</payment_type>
+            <priority>5</priority>
+            <vat rate="0">0.00</vat>
+          </details>
+        </transaction>
+      </transactions>
+    </account>
+
+    <account id="ACC-003" type="checking" status="blocked">
+      <owner inn="7705678901" kpp="770501001">
+        <name>ООО Старт</name>
+        <ceo>Козлов Дмитрий Александрович</ceo>
+        <phone>+7 495 111-22-33</phone>
+      </owner>
+      <balance currency="RUB" updated_at="2024-04-01">
+        <opening>250000.00</opening>
+        <closing>170000.00</closing>
+        <turnover_debit>80000.00</turnover_debit>
+        <turnover_credit>0.00</turnover_credit>
+      </balance>
+      <transactions total_count="1" total_amount="80000.00">
+        <transaction id="TXN-005" type="debit" status="completed" channel="web">
+          <date>2024-01-18</date>
+          <amount currency="RUB">80000.00</amount>
+          <purpose code="21">Оплата поставки материалов</purpose>
+          <counterparty inn="7706789012" kpp="770601001">
+            <name>ООО СтройМатериалы</name>
+            <account number="40702810100000044444">
+              <bank bic="044525974" name="Альфа-Банк"/>
+            </account>
+          </counterparty>
+          <details>
+            <doc_number>П-00303</doc_number>
+            <doc_date>2024-01-17</doc_date>
+            <payment_type>wire</payment_type>
+            <priority>5</priority>
+            <vat rate="20">13333.33</vat>
+          </details>
+        </transaction>
+      </transactions>
+    </account>
+
+  </accounts>
+
+</report>
