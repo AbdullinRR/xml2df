@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<orders>
+  <!-- Тест 4.4: Внутри якорного order есть список item. Конвертер перезапишет значение последним item -->
+  <order id="ORD-001" date="2024-01-15">
+    <customer>ООО Ромашка</customer>
+    <items>
+      <item sku="A1" qty="2">Ноутбук</item>
+      <item sku="A2" qty="5">Мышь</item>
+      <item sku="A3" qty="1">Монитор</item>
+    </items>
+    <total>150000.00</total>
+  </order>
+  <order id="ORD-002" date="2024-01-20">
+    <customer>ИП Петров</customer>
+    <items>
+      <item sku="B1" qty="3">Клавиатура</item>
+      <item sku="B2" qty="3">Мышь</item>
+    </items>
+    <total>15000.00</total>
+  </order>
+</orders>

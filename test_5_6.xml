@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<payments>
+  <!-- Тест 5.6: несколько тегов с одинаковым именем и разными атрибутами на одном уровне.
+       _collect_node_data записывает text/атрибуты в один словарь по ключу child_path.
+       Ключ строится из имени тега — атрибут type е влияет на путь.
+       Результат: второй (третий) <phone> перезаписывает первый.
+       Ожидание: потеря данных — в строке остаётся только последний номер телефона. -->
+  <transaction id="TXN-1">
+    <phone type="mobile">+7 111 111-11-11</phone>
+    <phone type="work">+7 222 222-22-22</phone>
+    <amount>100.00</amount>
+  </transaction>
+  <transaction id="TXN-2">
+    <phone type="mobile">+7 333 333-33-33</phone>
+    <phone type="home">+7 444 444-44-44</phone>
+    <phone type="work">+7 555 555-55-55</phone>
+    <amount>200.00</amount>
+  </transaction>
+</payments>

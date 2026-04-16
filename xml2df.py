@@ -223,6 +223,11 @@ class XML2DF:
             for attr_name, attr_value in node.attributes.items():  # type: ignore[attr-defined]
                 row[self._build_path(anchor_path, attr_name)] = attr_value
 
+            # собираем текст якорного тега
+            text = self._get_text_content(node)
+            if text:
+                row[anchor_path] = text
+
             # собираем данные внутри якорного тега с полным путём
             self._collect_node_data(node, row, anchor_path)
 
@@ -261,7 +266,7 @@ class XML2DF:
             raise ValueError(f"Ошибка парсинга XML: {exc}") from exc
 
         try:
-            root = doc.firstChild
+            root = doc.documentElement
             if root is None:
                 raise ValueError("XML документ пуст")
 
@@ -344,7 +349,7 @@ class XML2DF:
 
             return result
 
-        root = doc.firstChild
+        root = doc.documentElement
         if root is None:
             raise ValueError("XML документ пуст")
 

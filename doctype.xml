@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE payments [
+  <!ENTITY company "ООО Ромашка">
+  <!ENTITY bank "Сбербанк">
+]>
+<payments>
+  <!-- Тест 5.5: DOCTYPE с внутренними сущностями.
+       Вопросы:
+       1. Раскрывает ли minidom &company; → "ООО Ромашка"?
+       2. Является ли doc.firstChild DocumentType-нодой (BUG-001)?
+       3. Безопасность XXE: только внутренние сущности, без внешних файлов.
+       Ожидание для 1: minidom раскрывает внутренние сущности.
+       Ожидание для 2: если DOCTYPE — firstChild, конвертер упадёт. -->
+  <transaction id="TXN-1">
+    <counterparty>&company;</counterparty>
+    <bank>&bank;</bank>
+    <amount>1000.00</amount>
+  </transaction>
+  <transaction id="TXN-2">
+    <counterparty>&company;</counterparty>
+    <bank>&bank;</bank>
+    <amount>2000.00</amount>
+  </transaction>
+</payments>

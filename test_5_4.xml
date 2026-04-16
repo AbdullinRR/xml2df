@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="transactions.xsl"?>
+<payments>
+  <!-- Тест 5.4: processing instruction между <?xml?> и корневым тегом.
+       doc.firstChild вернёт PI-ноду вместо <payments> (BUG-001, аналог комментария).
+       _find_anchor_tag(PI_node) → ничего не найдёт → ValueError → RuntimeError.
+       Ожидание: конвертер падает с ошибкой. -->
+  <transaction id="TXN-1">
+    <purpose>Тест обработки processing instruction</purpose>
+    <amount>100.00</amount>
+  </transaction>
+  <transaction id="TXN-2">
+    <purpose>Второй тест</purpose>
+    <amount>200.00</amount>
+  </transaction>
+</payments>

@@ -63,7 +63,55 @@ def save_df_to_xlsx(df: pd.DataFrame, output_path: str) -> None:
     wb.save(output_path)
 
 
-st.title("XML → XLSX")
+def build_df(tmp_path: str, checked: list[str]) -> pd.DataFrame:
+    """
+    Конвертирует XML в DataFrame с фильтрацией по выбранным тегам.
+
+    Args:
+        tmp_path: Путь к XML файлу.
+        checked: Список выбранных путей из tree_select.
+
+    Returns:
+        Отфильтрованный DataFrame.
+    """
+    converter = XML2DF()
+    df = converter.get_df_from_xml(tmp_path)
+    df = df.loc[:, ~df.columns.duplicated()]
+
+    # строим маппинг: колонка df → полный путь из checked
+    col_rename = {}
+    for col in df.columns:
+        col_parts = col.split("|")
+        best_match = None
+        best_len = -1
+        for checked_path in checked:
+            checked_parts = checked_path.split("|")
+            if checked_parts[-len(col_parts):] == col_parts and len(checked_parts) > best_len:
+                best_match = checked_path
+                best_len = len(checked_parts)
+        if best_match and col not in col_rename:
+            col_rename[col] = best_match
+
+    # переименовываем и убираем дубликаты
+    df = df.rename(columns=col_rename)
+    df = df.loc[:, ~df.columns.duplicated()]
+
+    # нормализуем checked — убираем #value суффикс
+    normalized_checked = []
+    for c in checked:
+        normalized_checked.append(c.replace("#value", "") if c.endswith("#value") else c)
+
+    # убираем дубликаты сохраняя порядок
+    seen = set()
+    normalized_checked = [x for x in normalized_checked if not (x in seen or seen.add(x))]
+
+    selected_cols = [c for c in normalized_checked if c in df.columns]
+    return df[selected_cols]
+
+
+# UI
+
+st.title("XML -> XLSX")
 
 uploaded_file = st.file_uploader("Загрузи XML файл", type=["xml"])
 
@@ -76,74 +124,58 @@ if uploaded_file is not None:
         converter = XML2DF()
         tree_nodes = converter.get_tree_nodes(tmp_path)
 
+        # шаг 1: выбор тегов
         st.subheader("Выбери теги для конвертации")
         selected = tree_select(
             tree_nodes,
             check_model="leaf",
             show_expand_all=True,
         )
-
         checked = selected.get("checked", [])
 
-        if checked and st.button("Конвертировать"):
-            try:
-                with tempfile.TemporaryDirectory() as tmp_dir:
-                    xlsx_path = os.path.join(tmp_dir, "output.xlsx")
-
-                    df = converter.get_df_from_xml(tmp_path)
-                    df = df.loc[:, ~df.columns.duplicated()]
-
-                    # строим маппинг: колонка df → полный путь из checked
-                    col_rename = {}
-                    for col in df.columns:
-                        col_parts = col.split("|")
-                        best_match = None
-                        best_len = -1
-                        for checked_path in checked:
-                            checked_parts = checked_path.split("|")
-                            if checked_parts[-len(col_parts):] == col_parts and len(checked_parts) > best_len:
-                                best_match = checked_path
-                                best_len = len(checked_parts)
-                        if best_match and col not in col_rename:
-                            col_rename[col] = best_match
-
-                    # переименовываем и убираем дубликаты
-                    df = df.rename(columns=col_rename)
-                    df = df.loc[:, ~df.columns.duplicated()]
-
-                    # нормализуем checked — убираем #value суффикс
-                    normalized_checked = []
-                    for c in checked:
-                        if c.endswith("#value"):
-                            normalized_checked.append(c.replace("#value", ""))
-                        else:
-                            normalized_checked.append(c)
-
-                    # убираем дубликаты сохраняя порядок
-                    seen = set()
-                    normalized_checked = [x for x in normalized_checked if not (x in seen or seen.add(x))]
-
-                    selected_cols = [c for c in normalized_checked if c in df.columns]
-                    df = df[selected_cols]
-
-                    save_df_to_xlsx(df, xlsx_path)
-
-                    with open(xlsx_path, "rb") as f:
-                        xlsx_bytes = f.read()
-
-                st.subheader("DataFrame")
-                st.dataframe(df)
-                st.write(f"Строк: {len(df)}, столбцов: {len(df.columns)}")
-
-                st.download_button(
-                    label="Скачать XLSX",
-                    data=xlsx_bytes,
-                    file_name=uploaded_file.name.replace(".xml", ".xlsx"),
-                    mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+        if checked:
+            # шаг 2: переименование колонок
+            st.subheader("Переименуй колонки (необязательно)")
+            col_labels = {}
+            for path in checked:
+                # нормализуем путь для отображения
+                display_path = path.replace("#value", "") if path.endswith("#value") else path
+                new_name = st.text_input(
+                    label=display_path,
+                    value="",
+                    placeholder=display_path.split("|")[-1],
+                    key=f"rename_{path}",
                 )
+                col_labels[display_path] = new_name.strip() if new_name.strip() else display_path
 
-            except Exception as e:
-                st.error(f"Ошибка: {e}")
+            # шаг 3: конвертация
+            if st.button("Конвертировать"):
+                try:
+                    df = build_df(tmp_path, checked)
+
+                    # применяем пользовательские названия колонок
+                    df = df.rename(columns=col_labels)
+
+                    with tempfile.TemporaryDirectory() as tmp_dir:
+                        xlsx_path = os.path.join(tmp_dir, "output.xlsx")
+                        save_df_to_xlsx(df, xlsx_path)
+
+                        with open(xlsx_path, "rb") as f:
+                            xlsx_bytes = f.read()
+
+                    st.subheader("DataFrame")
+                    st.dataframe(df)
+                    st.write(f"Строк: {len(df)}, столбцов: {len(df.columns)}")
+
+                    st.download_button(
+                        label="Скачать XLSX",
+                        data=xlsx_bytes,
+                        file_name=uploaded_file.name.replace(".xml", ".xlsx"),
+                        mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                    )
+
+                except Exception as e:
+                    st.error(f"Ошибка: {e}")
 
     except Exception as e:
         st.error(f"Ошибка чтения XML: {e}")
